@@ -1,26 +1,25 @@
+// src/App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { CssBaseline, Box } from '@mui/material';
+import NavPanel from './components/NavPanel';
+import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <CssBaseline />
+      <Box display="flex">
+        <NavPanel />
+        <Box component="main" flexGrow={1} p={3} style={{ marginTop: '64px', marginLeft: '260px' }}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </Box>
+      </Box>
+    </Router>
   );
-}
+};
 
 export default App;

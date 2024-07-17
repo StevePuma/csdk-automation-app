@@ -6,28 +6,21 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-// Use the cors middleware
 app.use(cors());
 
-// Middleware to parse JSON bodies with increased limit
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-// Endpoint to receive query results and nlg summary
 app.post('/check-condition', async (req, res) => {
   const { resultData, nlgSummary } = req.body;
 
-  // Log the structure of data
   console.log("Received data:", resultData);
 
   if (Array.isArray(resultData.rows)) {
-    // Flatten the rows to extract Years values
-    const years = resultData.rows.map(row => row[0].text); // Assuming the first element is Years and we need the 'text' property
+    const years = resultData.rows.map(row => row[0].text);
 
-    // Log the `year` values to inspect their structure
     console.log("Years:", years);
 
-    // Check if the years column contains the value '2009'
     const hasCondition = years.some(year => year === '2009');
 
     if (hasCondition) {
@@ -46,17 +39,16 @@ app.post('/check-condition', async (req, res) => {
   }
 });
 
-// Function to create a Jira ticket
 const createJiraTicket = async (summary) => {
-  const jiraUrl = 'https://sisenseglobal.atlassian.net/rest/api/2/issue';
-  const jiraAuth = 'Basic ' + Buffer.from('stephen.poff@sisense.com:ATATT3xFfGF0LGHV_qyzsyMWWXHoQ4bJZDAdkQTPfqdFl1GDEzLCD96poz-pIafbKqSavmedkjVemMsVxSd4iNorHDBuj_KQMDfi0Z6m03iH5e8_ejLZSDEAyJs6vKn_lHoe4PyWrpjHt5SZyEYazpr99AcjKDi-ihdb7F7S9kUdR7Gcm_rgjps=3DC76B47').toString('base64');
+  const jiraUrl = '';
+  const jiraAuth = 'Basic ' + Buffer.from('').toString('base64');
 
   const ticketData = {
     fields: {
       project: {
         key: 'TST'
       },
-      summary: summary || 'Test', // Use nlgSummary or default to 'Test'
+      summary: summary || 'Test', 
       issuetype: {
         name: 'Task'
       },

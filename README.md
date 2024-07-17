@@ -1,46 +1,90 @@
-# Getting Started with Create React App
+# Sample App ReadMe
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This sample app demonstrates how to integrate Sisense embedded analytics with a React/TypeScript application and automate Jira ticket creation. Follow the instructions below to set up and run the app.
 
-In the project directory, you can run:
+## Prerequisites
 
-### `npm start`
+- Node.js and npm installed
+- A Jira account and project
+- Sisense account and API token
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Setup Instructions
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. **Clone the Repository**
+   
+   ```bash
+   git clone <repository-url>
+   ```
 
-### `npm test`
+2. **Install Dependencies**
+   
+   ```bash
+   npm install
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **Configure Backend**
 
-### `npm run build`
+   - Change directory to the backend folder:
+     
+     ```bash
+     cd backend
+     ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   - Open `server.js` file and update the Jira credentials:
+     
+     ```javascript
+     const createJiraTicket = async (summary) => {
+       const jiraUrl = '<YOUR-JIRA-URL>';
+       const jiraAuth = 'Basic ' + Buffer.from('<YOUR-USERNAME:APITOKEN>').toString('base64');
+     }
+     ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   - Run the server:
+     
+     ```bash
+     node server.js
+     ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   - Ensure the server is running by checking the console for:
+     
+     ```
+     Listening on port 3000
+     ```
 
-### `npm run eject`
+4. **Configure Frontend**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   - Back out of the backend directory:
+     
+     ```bash
+     cd ..
+     ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   - Open `src/index.tsx` file and update the Sisense context provider with your Sisense information:
+     
+     ```typescript
+     <SisenseContextProvider url={'https://YOUR-SERVER-URL.com'} token={'YOUR-API-TOKEN'}>
+       <AiContextProvider>
+         <App />
+       </AiContextProvider>
+     </SisenseContextProvider>
+     ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5. **Start the Application**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   - Run the application:
+     
+     ```bash
+     npm start
+     ```
 
-## Learn More
+   - Open your browser and refresh the page. The query will re-run, and you should see a new ticket in your Jira project.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Conclusion
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+By following these steps, you have set up a sample app that integrates Sisense embedded analytics with a React/TypeScript application and automates Jira ticket creation. If you encounter any issues, please refer to the documentation or contact support.
+
+---
+
+Enjoy your new app!
